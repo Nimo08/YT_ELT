@@ -2,6 +2,7 @@ import requests
 import json
 import os
 from dotenv import load_dotenv
+from datetime import date
 
 load_dotenv(dotenv_path="./.env")
 
@@ -25,7 +26,7 @@ def get_playlist_id():
         channel_items = data['items'][0]
         channel_playlistId = channel_items['contentDetails']['relatedPlaylists']['uploads']
 
-        print(channel_playlistId)
+        # print(channel_playlistId)
     
         return channel_playlistId
     
@@ -84,7 +85,7 @@ def extract_video_data(video_ids):
 
 
     try:
-        # Loop through the whole list in batches; at each batch define
+        # Loop through the whole list in batches and at each batch define
         # the concatenated video id string using python join, which will be used to build the url
         for batch in batch_list(video_ids, maxResults):
             video_ids_str = ",".join(batch)
@@ -121,8 +122,19 @@ def extract_video_data(video_ids):
     except requests.exceptions.RequestException as e:
         raise e
 
+# Save the extracted data to a file
+def save_to_json(extracted_data):
+    file_path = f"./data/YT_data_{date.today()}.json"
+    
+    # Context manager to write the file
+    with open(file_path, "w", encoding="utf-8") as json_outfile:
+        json.dump(extracted_data, json_outfile, indent=4,ensure_ascii=False)
+
+
 
 if __name__ == "__main__":
     playlistId = get_playlist_id()
     video_ids = get_video_ids(playlistId)
-    extract_video_data(video_ids)
+    video_data = extract_video_data(video_ids)
+    save_to_json(video_data)
+
