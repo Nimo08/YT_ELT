@@ -12,27 +12,27 @@ def insert_rows(cur,conn,schema,row):
             video_id = "video_id"
 
             cur.execute(
-                f"""INSERT INTO {schema}.{table}("Video_ID", "Video_Title", "Upload_Date", "Duration", "Video_Views", "Likes_Count", "Comments_Count")
+                f"""INSERT INTO {schema}.{table}(video_id, video_title, upload_date, duration, video_views, likes_count, comments_count)
                 VALUES (%(video_id)s, %(title)s, %(publishedAt)s, %(duration)s, %(viewCount)s, %(likeCount)s, %(commentCount)s);
                 """,
                 row,
             )
         else:
-            video_id = "Video_ID"
+            video_id = "video_id"
 
             cur.execute(
                 f"""
-                INSERT INTO {schema}.{table}("Video_ID", "Video_Title", "Upload_Date", "Duration", "Video_Type", "Video_Views", "Likes_Count", "Comments_Count")
-                VALUES (%(Video_ID)s, %(Video_Title)s, %(Upload_Date)s, %(Duration)s, %(Video_Type)s, %(Video_Views)s, %(Likes_Count)s, %(Comments_Count)s)
+                INSERT INTO {schema}.{table}(video_id, video_title, upload_date, duration, video_type, video_views, likes_count, comments_count)
+                VALUES (%(video_id)s, %(video_title)s, %(upload_date)s, %(duration)s, %(video_type)s, %(video_views)s, %(likes_count)s, %(comments_count)s)
                 """,
                 row,
             )
         conn.commit()
 
-        logger.info(f"Inserted row with Video_ID: {row[video_id]}")
+        logger.info(f"Inserted row with video_id: {row['video_id']}")
     
     except Exception as e:
-        logger.error(f"Error inserting row with Video_ID: {row[video_id]}")
+        logger.error(f"Error inserting row with video_id: {row['video_id']}")
         raise e
     
 
@@ -49,34 +49,34 @@ def update_rows(cur,conn,schema,row):
             comments_count = "commentCount"
         # core
         else:
-            video_id = "Video_ID"
-            upload_date = "Upload_Date"
-            video_title = "Video_Title"
-            video_views = "Video_Views"
-            likes_count = "Likes_Count"
-            comments_count = "Comments_Count"
+            video_id = "video_id"
+            upload_date = "upload_date"
+            video_title = "video_title"
+            video_views = "video_views"
+            likes_count = "likes_count"
+            comments_count = "comments_count"
 
         cur.execute(
             f"""
             UPDATE {schema}.{table}
-            SET "Video_Title" = %({video_title})s,
-                "Video_Views" = %({video_views})s, 
-                "Likes_Count" = %({likes_count})s, 
-                "Comments_Count" = %({comments_count})s
-            WHERE "Video_ID" = %({video_id})s AND "Upload_Date" = %({upload_date})s;
+            SET video_title = %({video_title})s,
+                video_views = %({video_views})s, 
+                likes_count = %({likes_count})s, 
+                comments_count = %({comments_count})s
+            WHERE video_id = %({video_id})s AND upload_date = %({upload_date})s;
             """,
             row,
         )
 
         conn.commit()
 
-        logger.info(f"Updated row with Video_ID: {row[video_id]}")
+        logger.info(f"Updated row with video_id: {row['video_id']}")
 
     except Exception as e:
-        logger.error(f"Error updating row with Video_ID: {row[video_id]} - {e}")
+        logger.error(f"Error updating row with video_id: {row['video_id']} - {e}")
         raise e
     
-def delete_rows(cur,conn, schema, ids_to_delete):
+def delete_rows(cur, conn, schema, ids_to_delete):
     
     try:
 
@@ -85,13 +85,13 @@ def delete_rows(cur,conn, schema, ids_to_delete):
         cur.execute(
             f"""
             DELETE FROM {schema}.{table}
-            WHERE "Video_ID" IN {ids_to_delete};
+            WHERE video_id IN {ids_to_delete};
             """
         )
 
         conn.commit()
-        logger.info(f"Deleted rows with Video_IDs: {ids_to_delete}")
+        logger.info(f"Deleted rows with video_ids: {ids_to_delete}")
 
     except Exception as e:
-        logger.error(f"Error deleting rows with Video_IDs: {ids_to_delete} - {e}")
+        logger.error(f"Error deleting rows with video_ids: {ids_to_delete} - {e}")
         raise e

@@ -32,7 +32,7 @@ def staging_table():
             if len(table_ids) == 0:
                 insert_rows(cur, conn, schema, row)
             else:
-                if row["video_id" in table_ids]:
+                if row["video_id"] in table_ids:
                     update_rows(cur,conn,schema,row)
                 else:
                     insert_rows(cur,conn,schema,row)
@@ -80,7 +80,7 @@ def core_table():
         rows = cur.fetchall()
 
         for row in rows:
-            current_video_ids.add(row["Video_ID"])
+            current_video_ids.add(row["video_id"])
 
             if len(table_ids) == 0:
                 transformed_row = transform_data(row)
@@ -88,7 +88,7 @@ def core_table():
             
             else:
                 transformed_row = transform_data(row)
-                if transformed_row["Video_ID"] in table_ids:
+                if transformed_row["video_id"] in table_ids:
                     update_rows(cur, conn, schema, transformed_row)
                 else:
                     insert_rows(cur, conn, schema, transformed_row)

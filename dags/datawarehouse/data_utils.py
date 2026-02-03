@@ -43,26 +43,26 @@ def create_table(schema):
     if schema == "staging":
         table_sql = f"""
                 CREATE TABLE IF NOT EXISTS {schema}.{table} (
-                    "Video_ID" VARCHAR(11) PRIMARY KEY NOT NULL,
-                    "Video_Title" TEXT NOT NULL,
-                    "Upload_Date" TIMESTAMP NOT NULL,
-                    "Duration" VARCHAR(20) NOT NULL,
-                    "Video_Views" INT,
-                    "Likes_Count" INT,
-                    "Comments_Count" INT   
+                    "video_id" VARCHAR(11) PRIMARY KEY NOT NULL,
+                    "video_title" TEXT NOT NULL,
+                    "upload_date" TIMESTAMP NOT NULL,
+                    "duration" VARCHAR(20) NOT NULL,
+                    "video_views" INT,
+                    "likes_count" INT,
+                    "comments_count" INT   
                 );
             """
     else:
         table_sql = f"""
                 CREATE TABLE IF NOT EXISTS {schema}.{table} (
-                    "Video_ID" VARCHAR(11) PRIMARY KEY NOT NULL,
-                    "Video_Title" TEXT NOT NULL,
-                    "Upload_Date" TIMESTAMP NOT NULL,
-                    "Duration" TIME NOT NULL,
-                    "Video_Type" VARCHAR(10) NOT NULL,
-                    "Video_Views" INT,
-                    "Likes_Count" INT,
-                    "Comments_Count" INT    
+                    "video_id" VARCHAR(11) PRIMARY KEY NOT NULL,
+                    "video_title" TEXT NOT NULL,
+                    "upload_date" TIMESTAMP NOT NULL,
+                    "duration" TIME NOT NULL,
+                    "video_type" VARCHAR(10) NOT NULL,
+                    "video_views" INT,
+                    "likes_count" INT,
+                    "comments_count" INT    
                 ); 
             """
     
@@ -77,10 +77,10 @@ def create_table(schema):
 
 def get_video_ids(cur, schema):
     # Get all video ids in the table
-    cur.execute(f"""SELECT Video_ID FROM {schema}.{table};""")
+    cur.execute(f"""SELECT video_id FROM {schema}.{table};""")
     # Give list of dictionaries where key: video_id, value: video_id value
     ids = cur.fetchall()
     # Extracting value for each row inside the video ID key
-    video_ids = [row["Video_ID"] for row in ids]
+    video_ids = [row["video_id"] for row in ids]
 
     return video_ids
