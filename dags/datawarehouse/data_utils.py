@@ -43,26 +43,26 @@ def create_table(schema):
     if schema == "staging":
         table_sql = f"""
                 CREATE TABLE IF NOT EXISTS {schema}.{table} (
-                    "video_id" VARCHAR(11) PRIMARY KEY NOT NULL,
-                    "video_title" TEXT NOT NULL,
-                    "upload_date" TIMESTAMP NOT NULL,
-                    "duration" VARCHAR(20) NOT NULL,
-                    "video_views" INT,
-                    "likes_count" INT,
-                    "comments_count" INT   
+                    video_id VARCHAR(11) PRIMARY KEY NOT NULL,
+                    video_title TEXT NOT NULL,
+                    upload_date TIMESTAMP NOT NULL,
+                    duration VARCHAR(20) NOT NULL,
+                    video_views INT,
+                    likes_count INT,
+                    comments_count INT   
                 );
             """
     else:
         table_sql = f"""
                 CREATE TABLE IF NOT EXISTS {schema}.{table} (
-                    "video_id" VARCHAR(11) PRIMARY KEY NOT NULL,
-                    "video_title" TEXT NOT NULL,
-                    "upload_date" TIMESTAMP NOT NULL,
-                    "duration" TIME NOT NULL,
-                    "video_type" VARCHAR(10) NOT NULL,
-                    "video_views" INT,
-                    "likes_count" INT,
-                    "comments_count" INT    
+                    video_id VARCHAR(11) PRIMARY KEY NOT NULL,
+                    video_title TEXT NOT NULL,
+                    upload_date TIMESTAMP NOT NULL,
+                    duration TIME NOT NULL,
+                    video_type VARCHAR(10) NOT NULL,
+                    video_views INT,
+                    likes_count INT,
+                    comments_count INT    
                 ); 
             """
     
