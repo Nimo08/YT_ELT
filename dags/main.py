@@ -2,6 +2,7 @@ from airflow import DAG
 import pendulum
 from datetime import datetime, timedelta
 from api.video_stats import get_playlist_id, get_video_ids, extract_video_data, save_to_json
+from datawarehouse.dwh import staging_table, core_table
 
 # Define the local timezone
 local_tz = pendulum.timezone("Africa/Nairobi")
@@ -41,4 +42,17 @@ with DAG(
     playlist_id >> video_ids >> extract_data >> save_to_json_task
 
 
+with DAG(
+    dag_id="update_db",
+    default_args=default_args,
+    description="DAG to process JSON file and insert data into both staging and core schema",
+    schedule="0 15 * * *",
+    catchup=False # not to catch up on missed dag runs from the past
+) as dag:
     
+    # Define tasks
+    update_staging = staging_table()
+    update_core = core_table()
+
+    # Define dependencies: order of running tasks from left -> right
+    update_staging >> update_core 
