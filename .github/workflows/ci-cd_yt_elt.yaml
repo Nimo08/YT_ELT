@@ -18,7 +18,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
             - name: Get changed files
-              id: changes-files-build
+              id: changed-files-build
               uses: tj-actions/changes-files@v45
               with:
                 files: |
@@ -78,7 +78,7 @@ jobs:
               id: changed-files-tests
               uses: tj-actions/changed-files@v45
               with:
-              files: |
+                files: |
                 dags/**
                 include/**
                 docker-compose.yaml
