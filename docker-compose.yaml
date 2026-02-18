@@ -162,6 +162,10 @@ services:
     <<: *airflow-common
     command: webserver
     container_name: airflow-webserver
+    deploy:
+      resources:
+        limits:
+          memory: 512m
     ports:
       - "8080:8080"
     healthcheck:
