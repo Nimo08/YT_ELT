@@ -139,7 +139,7 @@ services:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_CONN_USERNAME}", "-d", "${METADATA_DATABASE_NAME}"]
       interval: 10s
       retries: 5
-      start_period: 5s
+      start_period: 30s
     restart: always
  
  
