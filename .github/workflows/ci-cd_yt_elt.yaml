@@ -85,8 +85,8 @@ jobs:
         - name: Verify containers are healthy
           if: steps.changed-files-tests.outputs.any_changed == 'true' || github.event_name == 'workflow_dispatch'
           run: |
-          docker logs postgres
-          docker exec postgres pg_isready -U $POSTGRES_CONN_USERNAME
+            docker logs postgres
+            docker exec postgres pg_isready -U $POSTGRES_CONN_USERNAME
         - name: Run Unit and Integration Tests
           if: steps.changed-files-tests.outputs.any_changed == 'true' || github.event_name == 'workflow_dispatch'
           run: docker exec -t airflow-worker sh -c "pytest tests/ -v"
