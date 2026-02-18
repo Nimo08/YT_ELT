@@ -81,7 +81,7 @@ jobs:
                 docker-compose.yaml
         - name: Set up Docker Compose
           if: steps.changed-files-tests.outputs.any_changed == 'true' || github.event_name == 'workflow_dispatch'
-          run: docker compose up -d postgres redis airflow-init airflow-worker airflow-scheduler
+          run: docker compose up -d postgres redis airflow-init airflow-worker airflow-scheduler airflow-webserver
         - name: Verify containers are healthy
           if: steps.changed-files-tests.outputs.any_changed == 'true' || github.event_name == 'workflow_dispatch'
           run: |
